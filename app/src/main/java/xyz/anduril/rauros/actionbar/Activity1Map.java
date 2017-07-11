@@ -128,8 +128,6 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
                 return true;
             }
         });
-        LatLng whereuare = new LatLng(mLocation.getLatitude(),mLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(whereuare).title("You are here").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
     }
     //MATT - distance calculator
     //thanks https://stackoverflow.com/questions/639695/how-to-convert-latitude-or-longitude-to-meters
