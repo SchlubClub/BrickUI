@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ActionBar.iml" filepath="$PROJECT_DIR$/ActionBar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BrickUI.iml" filepath="$PROJECT_DIR$/BrickUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
