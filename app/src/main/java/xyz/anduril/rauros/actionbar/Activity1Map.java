@@ -35,6 +35,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
     private Location mLocation;
     private boolean debug = true;
     private Marker[] generatedMarkers;
+    private LatLng wherePlayerIs;
     private static final String TAG = Activity1Map.class.getSimpleName();
 
     @Override
@@ -43,12 +44,13 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
         setContentView(R.layout.map_activity);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        gpsTracker = new GPSTracker(getApplicationContext());
+        mLocation = gpsTracker.getLocation();
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        //TextView title = (TextView) findViewById(R.id.mapTitle);
-        //title.setText("Map goes here scrub");
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -128,6 +130,9 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
                 return true;
             }
         });
+        wherePlayerIs = getPlayersLocation();
+        mMap.addMarker(new MarkerOptions().position(wherePlayerIs).title("This is you, $player").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
+        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(wherePlayerIs,17.5f) );
     }
     //MATT - distance calculator
     //thanks https://stackoverflow.com/questions/639695/how-to-convert-latitude-or-longitude-to-meters
@@ -145,5 +150,10 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
         double d = R * c;
         return d * 1000; // meters
+    }
+
+    public LatLng getPlayersLocation() {
+        wherePlayerIs = new LatLng(mLocation.getLatitude(),mLocation.getLongitude());
+        return wherePlayerIs;
     }
 }
