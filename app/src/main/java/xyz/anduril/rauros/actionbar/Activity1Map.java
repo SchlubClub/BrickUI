@@ -1,13 +1,17 @@
 package xyz.anduril.rauros.actionbar;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -36,13 +40,17 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
     private boolean debug = true;
     private Marker[] generatedMarkers;
     private LatLng wherePlayerIs;
+
+    private static final int MY_PERMISSIONS_REQUEST_FINE_LOCATION = 1;
     private static final String TAG = Activity1Map.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        getPermissions();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         gpsTracker = new GPSTracker(getApplicationContext());
@@ -105,7 +113,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
             // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_json));
+                            this, R.raw.style_night_json));
 
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");
@@ -153,7 +161,46 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
     }
 
     public LatLng getPlayersLocation() {
-        wherePlayerIs = new LatLng(mLocation.getLatitude(),mLocation.getLongitude());
+        wherePlayerIs = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         return wherePlayerIs;
+    }
+
+    public void getPermissions() {
+        if (ContextCompat.checkSelfPermission(Activity1Map.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(Activity1Map.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            } else {
+                ActivityCompat.requestPermissions(Activity1Map.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_FINE_LOCATION);
+
+            }
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }
