@@ -89,7 +89,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
         //MATT - putting fancy map stuff in here
 
     }
-    
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -174,7 +174,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
             // in a raw resource file.
             boolean success = googleMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_night_json));
+                            this, R.raw.style_json));
 
             if (!success) {
                 Log.e(TAG, "Style parsing failed.");
