@@ -76,7 +76,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
                         startActivity(intentMap);
                         break;
                     case R.id.ic_map:
-
+                        updateLocation(mMap);
                         break;
                     case R.id.ic_settings:
                         Intent intentSettings = new Intent(Activity1Map.this, Activity2Settings.class);
@@ -138,9 +138,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
                 return true;
             }
         });
-        wherePlayerIs = getPlayersLocation();
-        mMap.addMarker(new MarkerOptions().position(wherePlayerIs).title("This is you, $player").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(wherePlayerIs,17.5f) );
+        updateLocation(mMap);
     }
     //MATT - distance calculator
     //thanks https://stackoverflow.com/questions/639695/how-to-convert-latitude-or-longitude-to-meters
@@ -202,5 +200,13 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+    public void updateLocation(GoogleMap googleMap) {
+
+        mMap = googleMap;
+
+        wherePlayerIs = getPlayersLocation();
+        mMap.addMarker(new MarkerOptions().position(wherePlayerIs).title("This is you, $player").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
+        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(wherePlayerIs,17.5f) );
     }
 }
