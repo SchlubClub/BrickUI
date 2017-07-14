@@ -89,55 +89,12 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
         //MATT - putting fancy map stuff in here
 
     }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-       // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        //do custom map style shit
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_night_json));
-
-            if (!success) {
-                Log.e(TAG, "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e(TAG, "Can't find style. Error: ", e);
-        }
-        //disable annoying toolbar at bottom when clicking markers
-        mMap.getUiSettings().setMapToolbarEnabled(false);
-
-        //remove all marker centering on tap
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            Marker currentShown;
-            public boolean onMarkerClick(Marker marker) {
-                if (marker.equals(currentShown)) {
-                    marker.hideInfoWindow();
-                    currentShown = null;
-                } else {
-                    marker.showInfoWindow();
-                    currentShown = marker;
-                }
-                return true;
-            }
-        });
+        styleMap(mMap);
         updateLocation(mMap);
     }
     //MATT - distance calculator
@@ -208,5 +165,40 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
         wherePlayerIs = getPlayersLocation();
         mMap.addMarker(new MarkerOptions().position(wherePlayerIs).title("This is you, $player").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
         mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(wherePlayerIs,17.5f) );
+    }
+
+    public void styleMap(GoogleMap googleMap) {
+        mMap = googleMap;
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_night_json));
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
+        //disable annoying toolbar at bottom when clicking markers
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+
+        //remove all marker centering on tap
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            Marker currentShown;
+
+            public boolean onMarkerClick(Marker marker) {
+                if (marker.equals(currentShown)) {
+                    marker.hideInfoWindow();
+                    currentShown = null;
+                } else {
+                    marker.showInfoWindow();
+                    currentShown = marker;
+                }
+                return true;
+            }
+        });
     }
 }
