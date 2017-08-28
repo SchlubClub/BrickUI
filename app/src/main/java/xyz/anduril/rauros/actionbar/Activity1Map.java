@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -163,7 +164,7 @@ public class Activity1Map extends AppCompatActivity  implements OnMapReadyCallba
         mMap = googleMap;
 
         wherePlayerIs = getPlayersLocation();
-        mMap.addMarker(new MarkerOptions().position(wherePlayerIs).title("This is you, $player").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
+        mMap.addMarker(new MarkerOptions().position(wherePlayerIs).title("You are here!").icon(BitmapDescriptorFactory.fromResource(R.drawable.youarehere)));
         mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(wherePlayerIs,17.5f) );
     }
 

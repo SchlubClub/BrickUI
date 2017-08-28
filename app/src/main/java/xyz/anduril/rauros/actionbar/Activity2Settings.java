@@ -22,7 +22,7 @@ public class Activity2Settings extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
         TextView title = (TextView) findViewById(R.id.settingsTitle);
-        title.setText("Settings goes here scrub");
+        title.setText("Placeholder for settings.");
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
